@@ -8,7 +8,10 @@ Course Number | Course | Link to Repository
 --- | --- | ---
 3 |  Getting and Cleaning Data |  [Course 3 Repository](https://github.com/JoeWadford/Data-Science-Coursera/tree/master/3_Getting_and_Cleaning_Data)
 2 |  R Programming |  [Course 2 Repository](https://github.com/JoeWadford/Data-Science-Coursera/tree/master/2_R_Programming)
-1 |  The Data Scientist's Toolbox |  [Course Repo](https://github.com/JoeWadford/Data-Science-Coursera/tree/master/1_Data_Scientist_Toolbox) 
+1 |  The Data Scientist's Toolbox |  [Course 1 Repository](https://github.com/JoeWadford/Data-Science-Coursera/tree/master/1_Data_Scientist_Toolbox) 
+
+## [Swirl Exercises](https://github.com/JoeWadford/Data-Science-Coursera/tree/master/Swirl)
+
 
 ## Contact Info
 LinkedIn | Email
