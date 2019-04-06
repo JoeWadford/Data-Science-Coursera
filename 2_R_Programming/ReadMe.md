@@ -9,8 +9,8 @@ Week | Subject Name | Link to Repository
 4 |  Simulation & Profiling | [Week 4 Repository](https://github.com/JoeWadford/Data-Science-Coursera/tree/master/2_R_Programming/Week4_R_Programming)
 3 |  Loop Functions and Debugging |  [Week 3 Repository](https://github.com/JoeWadford/Data-Science-Coursera/tree/master/2_R_Programming/Week3_R_Programming)
 2 |  Programming with R |  [Week 2 Repository](https://github.com/JoeWadford/Data-Science-Coursera/tree/master/2_R_Programming/Week2_R_Programming)
-1 |  Background, Getting |  [Week 1 Repository](https://github.com/JoeWadford/Data-Science-Coursera/tree/master/2_R_Programming/Week1_R_Programming) 
-  |  Started, and Nuts & Bolts |  
+1 |  Background, Getting Started, and Nuts & Bolts |  [Week 1 Repository](https://github.com/JoeWadford/Data-Science-Coursera/tree/master/2_R_Programming/Week1_R_Programming) 
+  
 
 ## [Swirl Exercises](https://github.com/JoeWadford/Data-Science-Coursera/tree/master/Swirl)
 
