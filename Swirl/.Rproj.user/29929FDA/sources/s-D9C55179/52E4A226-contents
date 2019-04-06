@@ -1,0 +1,52 @@
+# Coursera - Getting and cleaning data
+# swirl - grouping and chaining data with dplyr
+
+library(dplyr)
+
+cran <- tbl_df(mydf)
+
+rm("mydf")
+
+cran
+
+## group_by
+
+?group_by
+
+### Most data operations are done on groups defined by variables. 
+### group_by() takes an existing tbl and converts it into a grouped tbl 
+### where operations are performed "by group". ungroup() removes grouping.
+
+by_package <- group_by(cran, package)
+
+by_package
+
+summarize(by_package, mean(size))
+
+pack_sum
+
+quantile(pack_sum$count, probs = 0.99)
+
+info()
+
+top_counts <- filter(pack_sum, count > 679)
+top_counts
+
+View(top_counts)
+
+top_counts_sorted <- arrange(top_counts, desc(count))
+top_counts_sorted
+View(top_counts_sorted)
+
+top_unique <- filter(pack_sum, unique > 465)
+View(top_unique)
+
+top_unique
+
+play()
+nxt()
+
+top_unique_sorted <- arrange(top_unique, desc(unique))
+View(top_unique_sorted)
+top_unique_sorted
+
