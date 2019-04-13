@@ -6,11 +6,13 @@
 
 ## subsetting and sorting
 
+
+#### X[sample(1:5,] scrambles the rows
+
+```R
 set.seed(13435)
 X <- data.frame("var1"=sample(1:5), "var2"=sample(6:10), "var3"=sample(11:15))
 X <- X[sample(1:5),]; X$var2[c(1,3)] = NA
-
-#### X[sample(1:5,] scrambles the rows
 
 X
 
@@ -32,14 +34,22 @@ X[,"var1"]
 X[1:2, "var2"]
 
 	# [1] NA 10
-
-X[(X$var1 <= 3 & X$var3 > 11),]
+```
 
 #### just the rows where variable 1 <= 3 AND var3 > 11
+
+```R
+
+X[(X$var1 <= 3 & X$var3 > 11),]
 
 	#   var1 var2 var3
 	# 1    2   NA   15
 	# 2    3   NA   12
+```
+
+##### the rows where variable1 <= 3 OR variable3 > 15
+
+```R
 
 X[(X$var1 <= 3 | X$var3 > 15),]
 
@@ -47,14 +57,19 @@ X[(X$var1 <= 3 | X$var3 > 15),]
 	# 1    2   NA   15
 	# 4    1   10   11
 	# 2    3   NA   12
-
-X[which(X$var2 > 8),]
+```
 
 #### which = Give the TRUE indices of a logical object, allowing for array indices.
+
+```R
+X[which(X$var2 > 8),]
 
 	#   var1 var2 var3
 	# 4    1   10   11
 	# 5    4    9   13
+```
+
+```R
 
 sort(X$var1)
 
@@ -67,31 +82,41 @@ sort(X$var1, decreasing = TRUE)
 sort(X$var2, na.last = TRUE)
 
 	# [1]  6  9 10 NA NA
-
-X[order(X$var1),]
-
-#### subsets X while putting var1 in order, from smallest to largest as default
-
-	#   var1 var2 var3
-	# 4    1   10   11
-	# 1    2   NA   15
-	# 2    3   NA   12
-	# 5    4    9   13
-	# 3    5    6   14
-
-X[order(X$var1, X$var3),]
-
-#### subsets X while putting var1 in order, followed by var 3 if there are any of the same variables in var 1
-
-	#   var1 var2 var3
-	# 4    1   10   11
-	# 1    2   NA   15
-	# 2    3   NA   12
-	# 5    4    9   13
-	# 3    5    6   14
+```
 
 ### Ordering with plyr
 
+#### subsets X while putting var1 in order, from smallest to largest as default
+
+```R
+
+X[order(X$var1),]
+
+	#   var1 var2 var3
+	# 4    1   10   11
+	# 1    2   NA   15
+	# 2    3   NA   12
+	# 5    4    9   13
+	# 3    5    6   14
+```
+
+#### subsets X while putting var1 in order, followed by var 3 if there are any of the same variables in var 1
+
+```R
+X[order(X$var1, X$var3),]
+
+	#   var1 var2 var3
+	# 4    1   10   11
+	# 1    2   NA   15
+	# 2    3   NA   12
+	# 5    4    9   13
+	# 3    5    6   14
+```
+
+### arranging X by the var1 in acending order.  ascending order is the default
+
+
+```R
 arrange(X, var1)
 
 	#   var1 var2 var3
@@ -109,10 +134,13 @@ arrange(X, desc(var1))
 	# 3    3   NA   12
 	# 4    2   NA   15
 	# 5    1   10   11
+```
+
+#### two ways to add a column
+
+```R
 
 X$var4 <- rnorm(5)
-
-#### adding a column
 
 X
 
@@ -125,8 +153,6 @@ X
 
 Y <- cbind(X, rnorm(5))
 
-#### binding another column to X dataset
-
 Y
 
 	#   var1 var2 var3       var4    rnorm(5)
@@ -135,8 +161,13 @@ Y
 	# 2    3   NA   12  0.4966936  0.08909424
 	# 3    5    6   14  0.0631830  0.47838570
 	# 5    4    9   13 -0.5361329  1.00053336
+```
 
 ## summarizing data
+
+#### using summarize, str, and quantile to analyze data
+
+```R
 
 if(!file.exists("./data")){dir.create("./data")}
 fileUrl <- "https://data.baltimorecity.gov/api/views/k5ry-ef3g/rows.csv?accessType=DOWNLOAD"
@@ -195,10 +226,12 @@ quantile(restData$councilDistrict, probs=c(0.5,0.75,0.9))
 
 	# 50% 75% 90% 
 	#   9  11  12 
+```
 
+#### Introducing the table function.  NOTE: ifany will tabulate NAs if there are any
+
+```R
 table(restData$zipCode,useNA="ifany")
-
-#### ifany will tabulate NAs if there are any
 
 	# -21226  21201  21202  21205  21206  21207  21208  21209  21210  21211  21212  21213  21214  21215  21216  21217  21218  21220  21222  21223 
 	#      1    136    201     27     30      4      1      8     23     41     28     31     17     54     10     32     69      1      7     56 
@@ -222,10 +255,14 @@ table(restData$councilDistrict,restData$zipCode)
 	#  12     0     0     0     0     2     0     0     0     0     0
 	#  13     0     1     0     0     1     0     0     0     0     1
 	#  14     0     0     0     0     0     0     0     0     0     0
+```
 
 #### And so, for example, you see that district ten has 18 restaurants in the 21226 zip code. And so you can do this for different 
-#### qualitative variables and get a sense of the relationship between those variables.
 
+
+#### Qualitative variables (sum, any, all, colSums) and get a sense of the relationship between those variables.
+
+```R
 sum(is.na(restData$councilDistrict))
 
 	# [1] 0
@@ -246,6 +283,11 @@ colSums(is.na(restData))
 all(colSums(is.na(restData))==0)
 
 	# [1] TRUE
+```
+
+#### %in% matches the second function to the first.  see below for examples
+
+```R
 
 table(restData$zipCode %in% c("21212"))
 
@@ -256,9 +298,12 @@ table(restData$zipCode %in% c("21212","21213"))
 
 	# FALSE  TRUE 
 	#  1268    59 
+```
 
-restData[restData$zipCode %in% c("21212", "21213"),]
 #### subsetting a dataset based on two variables in a column
+
+```R
+restData[restData$zipCode %in% c("21212", "21213"),]
 
 	#                                     name zipCode                neighborhood councilDistrict policeDistrict
 	# 29                      BAY ATLANTIC CLUB   21212                    Downtown              11        CENTRAL
@@ -267,7 +312,11 @@ restData[restData$zipCode %in% c("21212", "21213"),]
 	# 111            BALTIMORE ESTONIAN SOCIETY   21213          South Clifton Park              12        EASTERN
 	# 187                              CAFE ZEN   21212                    Rosebank               4       NORTHERN
 	# 54 more rows...
+```
 
+#### summary function
+
+```R
 data("UCBAdmissions")
 DF = as.data.frame(UCBAdmissions)
 summary(DF)
@@ -279,12 +328,13 @@ summary(DF)
 	#                           D:4   Mean   :188.6  
 	#                           E:4   3rd Qu.:302.5  
 	#                           F:4   Max.   :512.0  
-
+```
 ### xtabs
+#### example: frequency based on gender and admission
 
+```R
 xt <- xtabs(Freq ~ Gender + Admit, data=DF)
 xt
-#### frequency based on gender and admission
 
 	#         Admit
 	# Gender   Admitted Rejected
@@ -301,9 +351,12 @@ xt
 	#    A 26 18 36
 	#    B 27 42 20
 	# 8 more replicates, tensions, and wools
+```
 
-ftable(xt)
 ####ftable displays it in a compact form
+
+```R
+ftable(xt)
 
 	#              replicate  1  2  3  4  5  6  7  8  9
 	# wool tension                                     
@@ -313,11 +366,14 @@ ftable(xt)
 	# B    L                 27 14 29 19 29 31 41 20 44
 	#      M                 42 26 19 16 39 28 21 39 29
 	#      H                 20 21 24 17 13 15 15 16 28
+#### object.size function
 
+```R
 fakeData = rnorm(1e5)
 object.size(fakeData)
 
 	# 800040 bytes
+```
 
 ## Creating New Variables
 
@@ -329,14 +385,17 @@ object.size(fakeData)
 #### common variables to create = missingness variables, "cutting up" quantitative variables,
 #### applying transforms
 
+```R
 setwd("C:/Users/joewa/OneDrive/Desktop/Coursera/Notes/Getting and cleaning data - week 3")
 if(!file.exists("./data")){dir.create("./data")}
 fileUrl <- "https://data.baltimorecity.gov/api/views/k5ry-ef3g/rows.csv?accessType=DOWNLOAD"
 download.file(fileUrl, destfile="./data/restaurants.csv",method="curl")
 restData <- read.csv("./data/restaurants.csv")    
+```
 
 ### creating sequences
 
+```R
 s1 <- seq(1,10,by=2)
 s1
 
@@ -351,7 +410,9 @@ x <- c(1,3,8,25,100)
 seq(along=x)
 
 	# [1] 1 2 3 4 5
+```
 
+```R
 restData$nearMe = restData$neighborhood %in% c("Roland Park", "Homeland")
 table(restData$nearMe)
 
@@ -397,7 +458,11 @@ restData$zcf[1:10]
 
 	# [1] 21206 21231 21224 21211 21223 21218 21205 21211 21205 21231
 	# 32 Levels: -21226 21201 21202 21205 21206 21207 21208 21209 21210 21211 21212 21213 21214 21215 21216 21217 21218 21220 21222 21223 21224 21225 ... 21287
+```
 
+### factors
+
+```R
 class(restData$zcf)
 
 	# [1] "factor"
@@ -412,13 +477,18 @@ relevel(yesnofac,ref="yes")
 as.numeric(yesnofac)
 	
 	# [1] 1 2 2 2 2 2 1 1 1 1
+```
 
+### using plyr to transform data
+
+```R
 library(plyr)
 restData2 = mutate(restData,zipGroups = cut2(zipCode,g=4))
 table(restData2$zipGroups)
 
 	# [-21226,21205) [ 21205,21220) [ 21220,21227) [ 21227,21287] 
 	#           338            375            300            314 
+```
 
 ### Common Transforms
 
@@ -433,6 +503,7 @@ table(restData2$zipGroups)
 	# log2(x), log10(x) other common logs
 	# exp(x) exponentiating x
 
+```R
 library(reshape2)
 head(mtcars)
 
@@ -459,11 +530,15 @@ tail(carMelt,n=3)
 	# 62  Ferrari Dino    5   6       hp   175
 	# 63 Maserati Bora    5   8       hp   335
 	# 64    Volvo 142E    4   4       hp   109
+```
 
+#### reshaping using dcast
+
+```R
 cylData <- dcast(carMelt, cyl ~ variable)
 
-#### Aggregation function missing: defaulting to length
-#### this isn't an error - it is a warning
+	# Aggregation function missing: defaulting to length
+	# this isn't an error - it is a warning
 
 cylData
 
@@ -479,7 +554,11 @@ cylData
 	# 1   4 26.66364  82.63636
 	# 2   6 19.74286 122.28571
 	# 3   8 15.10000 209.21429
+```
 
+#### analyzing using tapply.  tapply = Apply a function to each cell of a ragged array
+
+```R
 head(InsectSprays)
 
 	#   count spray
@@ -494,7 +573,11 @@ tapply(InsectSpray$count,InsectSpray$spray,sum)
 
 	#   A   B   C   D   E   F 
 	# 174 184  25  59  42 200 
+```
 
+#### split. divides the data in the vector x into the groups defined by f.
+
+```R
 spIns = split(InsectSprays$count, InsectSprays$spray)
 spIns
 
@@ -515,7 +598,12 @@ spIns
 
 	# $F
 	#  [1] 11  9 15 22 15 16 13 10 26 26 24 13
+```
 
+#### lapply =  returns a list of the same length as X, 
+#### each element of which is the result of applying FUN to the corresponding element of X
+
+```R
 sprCount = lapply(spIns,sum)
 sprCount
 
@@ -536,17 +624,30 @@ sprCount
 
 	# $F
 	# [1] 200
+```
 
+#### unlist. Flatten Lists. Given a list structure x , 
+#### unlist simplifies it to produce a vector which contains all the atomic components which occur in x .
+
+```R
 unlist(sprCount)
 
 	#   A   B   C   D   E   F 
 	# 174 184  25  59  42 200
+```
 
+#### sapply.  does the same jobs as lapply() function but returns a vector. 
+
+```R
 sapply(spIns,sum)
 
 	#   A   B   C   D   E   F 
 	# 174 184  25  59  42 200
+```
 
+#### ddply = For each subset of a data frame, apply function then combine results into a data frame.
+
+```R
 ddply(InsectSprays,.(spray),summarize,sum=sum(count))
 	
 	#   spray sum
@@ -571,6 +672,7 @@ head(spraySums)
 	# 4     A 174
 	# 5     A 174
 	# 6     A 174
+```
 
 ### More information
 
@@ -615,8 +717,9 @@ head(spraySums)
 
 ## Managing Data Frames with dplyr - Basic Tools
 
-### Using the tools
+### Using the dplyr tools
 
+```R
 library(dplyr)
 options(width = 105)
 
@@ -645,7 +748,12 @@ names(chicago)
 
 	# [1] "city"       "tmpd"       "dptp"       "date"      
 	# [5] "pm25tmean2" "pm10tmean2" "o3tmean2"   "no2tmean2" 
+```
 
+#### select keeps only the variables you mention; 
+#### different methods to retain or remove data using select and other methods
+
+```R
 head(select(chicago, city:dptp))
 
 	#   city tmpd   dptp
@@ -670,6 +778,12 @@ head(chicago[, -(i:j)])
 	# 5 1987-01-05         NA         NA 4.750000  30.33333
 	# 6 1987-01-06         NA   48.00000 5.833333  25.77233
 
+```
+
+#### filter = find rows/cases where conditions are true. 
+#### Unlike base subsetting with [, rows where the condition evaluates to NA are dropped
+
+```R
 chic.f <- filter(chicago, pm25tmean2 > 30)
 head(chic.f, 10)
 
@@ -695,7 +809,12 @@ head(chic.f)
 	# 4 chic   84 72.9 2001-08-01    43.7000       81.5 45.17736  27.44239
 	# 5 chic   85 72.6 2001-08-08    38.8375       70.0 37.98047  27.62743
 	# 6 chic   84 72.6 2001-08-09    38.2000       66.0 36.73245  26.46742
+```
 
+#### arrange = Arrange Rows By Variables
+#### Use desc() to sort a variable in descending order.
+
+```R
 chicago <- arrange(chicago, date)
 head(chicago)
 
@@ -737,7 +856,10 @@ tail(chicago)
 	# 6938 chic 33.0 27.375 1987-01-03         NA   34.16667 3.333333  23.81548
 	# 6939 chic 33.0 29.875 1987-01-02         NA         NA 3.304348  23.19099
 	# 6940 chic 31.5 31.500 1987-01-01         NA   34.00000 4.250000  19.98810
+```
+#### rename() keeps all variables.
 
+```R
 chicago <- rename(chicago, pm25 = pm25tmean2, dewpoint = dptp)
 head(chicago)
 
@@ -748,7 +870,11 @@ head(chicago)
 	# 4 chic   37     34.5 2005-12-28 17.75000       27.5  3.260417  19.28563
 	# 5 chic   40     33.6 2005-12-27 23.56000       27.0  4.468750  23.50000
 	# 6 chic   35     29.6 2005-12-26  8.40000        8.5 14.041667  16.81944
+```
 
+#### mutate = adds new variables and preserves existing ones
+
+```R
 chicago <- mutate(chicago, pm25detrend = pm25-mean(pm25, na.rm = TRUE))
 head(select(chicago, pm25, pm25detrend))
 
@@ -761,6 +887,14 @@ head(select(chicago, pm25, pm25detrend))
 	# 6  8.40000   -7.830958
 
 chicago <- mutate(chicago, tempcat = factor(1 * (tmpd > 80), labels = c("cold", "hot")))
+```
+
+#### Group By One Or More Variables
+#### Most data operations are done on groups defined by variables. 
+#### group_by() takes an existing tbl and converts it into a grouped tbl where operations are performed "by group". 
+#### ungroup() removes grouping.
+
+```R
 hotcold <- group_by(chicago, tempcat)
 hotcold
 
@@ -818,7 +952,11 @@ summarize(years, pm25 = mean(pm25, na.rm = TRUE), o3 = max(o3tmean2), no2 = medi
 	# 17  2003  15.2  56.2  24.6
 	# 18  2004  14.6  44.5  23.4
 	# 19  2005  16.2  58.8  22.6
+```
 
+#### %>% passes the argument on the left side to arguments on the right side of %>%
+
+```R
 chicago %>% mutate(month = as.POSIXlt(date)$mon + 1) %>% group_by(month) %>% 
 	summarize(pm25 = mean(pm25, na.rm = TRUE), o3 = max(o3tmean2), no2 = median(no2tmean2))
 
@@ -838,6 +976,7 @@ chicago %>% mutate(month = as.POSIXlt(date)$mon + 1) %>% group_by(month) %>%
 	# 10    10  14.2  47.1  24.2
 	# 11    11  15.2  29.5  23.6
 	# 12    12  17.5  27.7  24.5
+```
 
 ### once you learn the "dplyr" grammar there are a few additional benefits
 
@@ -849,6 +988,7 @@ chicago %>% mutate(month = as.POSIXlt(date)$mon + 1) %>% group_by(month) %>%
 
 ### merging data - merge()
 
+```R
 setwd("C:/Users/joewa/OneDrive/Desktop/Coursera/Notes/Getting and cleaning data - week 3")
 
 fileURL1 = "https://raw.githubusercontent.com/DataScienceSpecialization/courses/master/03_GettingData/04_01_editingTextVariables/data/reviews.csv"
@@ -877,7 +1017,15 @@ names(reviews)
 names(solutions)
 
 	# [1] "id"         "problem_id" "subject_id" "start"      "stop"       "time_left"  "answer"  
+```
 
+#### merge = Merge two data frames by common columns or row names, or do other versions of database join operations.
+
+#### intersect = Calculates the intersection of subsets of a probability space. Comparisons are made row-wise, 
+#### so that in the data frame case, intersect(A,B) is a data frame with those rows that are both in A and in B.
+
+
+```R
 mergedData = merge(reviews, solutions, by.x= "solution_id", by.y = "id", all = TRUE)
 head(mergedData)
 
@@ -903,7 +1051,12 @@ head(mergedData2)
 	# 4  2 1304095188 1304095206      2306           4          22      1         NA         NA   <NA>
 	# 5  3 1304095127 1304095146      2366          NA          NA     NA         34         22      C
 	# 6  3 1304095276 1304095320      2192           5          28      1         NA         NA   <NA>
+```
 
+#### Join, like merge, is designed for the types of problems where you would use a sql join.
+#### join_all = Recursively join a list of data frames.
+
+```R
 library(plyr)
 df1 = data.frame(id=sample(1:10), x=rnorm(10))
 df2 = data.frame(id=sample(1:10), y=rnorm(10))
@@ -943,3 +1096,6 @@ join_all(dfList)
 	# 8  10 -0.5034562 -1.1630135 -0.02340268
 	# 9   2  1.0417257 -0.9334040  0.32543811
 	# 10  4  1.0950561  0.8006291 -1.67153895
+```
+
+# end
