@@ -1,4 +1,7 @@
 ﻿# Coursera - Getting and Cleaning Data - Week 3
+
+# [Week 3 Quiz](https://github.com/JoeWadford/Data-Science-Coursera/tree/master/3_Getting_and_Cleaning_Data/Week3_Getting_and_Cleaning_Data/week%203%20quiz)
+
 # Notes and such
 
 ## subsetting and sorting
