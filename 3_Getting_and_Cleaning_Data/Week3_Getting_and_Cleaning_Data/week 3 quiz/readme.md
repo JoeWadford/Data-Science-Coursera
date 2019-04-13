@@ -17,6 +17,7 @@
 
 #### What are the first 3 values that result?
 
+```R
 setwd("C:/Users/joewa/OneDrive/Documents/Data Science Coursera/3_Getting_and_Cleaning_Data/Week3_Getting_and_Cleaning_Data")
 if(!file.exists("./data")){dir.create("./data")} 
 quizUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Fss06hid.csv" 
@@ -37,6 +38,7 @@ head(select(agricultureLogical, ACR:AGS),3)
 	# 125   3   6
 	# 238   3   6
 	# 262   3   6
+```
 
 ## Question 2. 
 
@@ -47,6 +49,7 @@ head(select(agricultureLogical, ACR:AGS),3)
 #### Use the parameter native=TRUE. What are the 30th and 80th quantiles of the resulting data? 
 #### (some Linux systems may produce an answer 638 different for the 30th quantile)
 
+```R
 library("jpeg")
 ??readjpeg
 jpegUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fjeff.jpg"
@@ -57,6 +60,7 @@ quantile(jeffjpg, probs = c(0.3, 0.8))
 
 	#       30%       80% 
 	# -15259150 -10575416 
+```
 
 ## Question 3
 
@@ -76,6 +80,7 @@ quantile(jeffjpg, probs = c(0.3, 0.8))
 #### http://data.worldbank.org/data-catalog/GDP-ranking-table
 #### http://data.worldbank.org/data-catalog/ed-stats
 
+```R
 gdpUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FGDP.csv"
 educUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FEDSTATS_Country.csv"
 
@@ -116,11 +121,13 @@ mergedData[order(gdpRank, decreasing = TRUE), list(CountryCode, CountryName, gdp
 
 	#    CountryCode         CountryName gdpRank GDP
 	# 1:         KNA St. Kitts and Nevis     178 767
+```
 
 ## Question 4
 
 #### What is the average GDP ranking for the "High income: OECD" and "High income: nonOECD" group?
 
+```R
 mean(arrangeData$gdpRank[arrangeData$`Income Group` =="High income: nonOECD"])
         
         # [1] 91.91304
@@ -128,12 +135,14 @@ mean(arrangeData$gdpRank[arrangeData$`Income Group` =="High income: nonOECD"])
 mean(arrangeData$gdpRank[arrangeData$`Income Group` =="High income: OECD"])
 
 	# [1] 32.96667
+```
 
 ## Question 5
 
 #### Cut the GDP ranking into 5 separate quantile groups. Make a table versus Income.Group. 
 #### How many countries are Lower middle income but among the 38 nations with highest GDP?
 
+```R
 breaks <- quantile(arrangeData$gdpRank, probs = seq(0,1,.2), na.rm = TRUE)
 arrangeData$quantile <- cut(arrangeData$gdpRank, breaks=breaks)
 
@@ -144,4 +153,5 @@ table(arrangeData$'Income Group', arrangeData$quantile)
 	#  High income: OECD          17          10          1         1         0
 	#  Low income                  0           1          9        16        11
 	#  Lower middle income         5          13         11         9        16
+```
 	#  Upper middle income        11           9          8         8         9
