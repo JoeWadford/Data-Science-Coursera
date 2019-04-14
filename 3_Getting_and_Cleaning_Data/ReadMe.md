@@ -6,7 +6,7 @@ Still working on completing this course
 ## Notes
 Week | Subject Name | Link to Repository
 --- | --- | ---
-4 |  Text and Data Manipulation | Under Construction
+4 |  Text and Data Manipulation | [Week 4 Repository](https://github.com/JoeWadford/Data-Science-Coursera/tree/master/3_Getting_and_Cleaning_Data/Week4_Getting_and_Cleaning_Data)
 3 |  Organizing, Merging and Managing the Data |  [Week 3 Repository](https://github.com/JoeWadford/Data-Science-Coursera/tree/master/3_Getting_and_Cleaning_Data/Week3_Getting_and_Cleaning_Data)
 2 |  Common Data Storage Types and Extraction Tools |  [Week 2 Repository](https://github.com/JoeWadford/Data-Science-Coursera/tree/master/3_Getting_and_Cleaning_Data/Week2_Getting_and_Cleaning_Data)
 1 |  Finding Data and Reading Different Files |  [Week 1 Repository](https://github.com/JoeWadford/Data-Science-Coursera/tree/master/3_Getting_and_Cleaning_Data/Week1_Getting_and_Cleaning_Data) 
